@@ -1,0 +1,23 @@
+.typeItem {
+    height: 25px;
+    width:180px;
+    border-radius: 20px;
+    background-color: #F4B9BF;
+    text-align: center;
+    padding: 5px;
+    margin-top: 10px;
+    box-shadow: 0px 0px 8px 0 rgb(151, 151, 151);
+    cursor:pointer;
+}
+
+.typeItemActive {
+    height: 25px;
+    width:180px;
+    border-radius: 20px;
+    background-color: #7fbdae;
+    text-align: center;
+    padding: 5px;
+    margin-top: 10px;
+    box-shadow: 0px 0px 8px 0 rgb(151, 151, 151);
+    cursor:pointer;
+}

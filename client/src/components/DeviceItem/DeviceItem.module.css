@@ -1,0 +1,48 @@
+.deviceCard {
+    width: 150px;
+    height: 200px;
+    background-color: white;
+    border-radius: 11px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin: 15px;
+    box-shadow: 0px 0px 8px 0 rgb(179, 179, 179);
+    padding: 5px 0;
+}
+
+.deviceCard__name {
+    text-align: center;
+}
+
+.deviceCard__img {
+    max-height: 115px;
+    max-width: 100px ;
+    cursor: pointer;
+}
+
+
+.deviceCard__user {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    min-width: 150px;
+    justify-content: center;
+    align-items: center;
+}
+.deviceCard__user__img {
+    width: 15px;
+    height: 15px;
+    border-radius: 10px;
+    margin-right: 5px;
+    background-color: #7FBDAE;
+}
+
+.deviceCard__img__wrap {
+    height: 115px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

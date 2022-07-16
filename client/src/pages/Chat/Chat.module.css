@@ -1,0 +1,107 @@
+.chat {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.chat__main {
+    width: 1240px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.chat__main__room {
+    width: 200px;
+    height:75px;
+    background-color: white;
+    margin: 10px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 8px 0 rgb(151, 151, 151);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.chat__main__window {
+    height: 800px;
+    width: 800px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.chat__main__window hr{
+    width: 792px;
+    margin: 10px 0;
+}
+
+.chat__main__window__messages {
+    background-color: #ededed;
+    width: 780px;
+    height: 700px;
+    border-radius: 20px;
+    padding: 20px;
+    overflow: auto;
+}
+
+.chat__main__window__input {
+    display: flex;
+    flex-direction: row;
+    width: 750px;
+    justify-content: space-between;
+    height: 60px;
+    align-items: center;
+}
+
+.chat__main__window__input button {
+    padding: 6px 15px;
+    border-radius: 13px;
+    background-color: #f4b9bf;
+    font-size: 16px;
+    border: 0px;
+    box-shadow: 0px 0px 8px 0 rgb(151, 151, 151);
+    color: #EDEDED;
+    cursor: pointer;
+}
+
+.chat__main__window__input input {
+    width: 500px;
+    height: 30px;
+    font-size: 16px;
+    padding: 0 5px;
+}
+.chat__main__window__input div {
+    background-color: #7fbdae;
+    padding: 10px 15px;
+    border-radius: 20px;
+}
+.chat__main__window__messages__message {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 20px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.chat__main__window__messages__message__user {
+    background-color: #7fbdae;
+    border-radius: 20px;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.chat__main__window__messages__message__companion {
+    background-color: #f4b9bf;
+    border-radius: 20px;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.chat__main__window__messages__message__value {
+    padding: 5px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 0 rgb(151, 151, 151);
+}

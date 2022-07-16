@@ -1,0 +1,9 @@
+.deviceList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.deviceList h2 {
+    display: flex;
+    margin: 20px;
+}

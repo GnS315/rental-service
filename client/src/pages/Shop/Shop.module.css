@@ -1,0 +1,31 @@
+.shop {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.shop__main {
+    width: 1240px;
+    display: flex;
+    justify-content: flex-start;
+}
+.shop__main__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    max-width: 1060px;
+    min-height: 123px;
+    padding: 0px 30px;
+}
+.shop__main__content__input {
+    width: 350px;
+    border: none;
+    height: 20px;
+    border-radius: 5px;
+    margin-left: 22px;
+}
+.shop__main__content__devices {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
