@@ -30,7 +30,6 @@ class DeviceController {
     }
 
     async getAll(req, res) {
-
             let {typeId, limit, page} = req.query;
             page = page || 1
             limit = limit || 9
@@ -50,22 +49,18 @@ class DeviceController {
                 .select( 'device.id', 'device.name', 'device.price', 'device.img','device.info', 'user.login')
             }
             return res.json(devices)
-
     }
 
     async getOne(req, res) {
-
             const {id} = req.params
             const device = await db('device')
             .where({'device.id': id})
             .join('user', 'device.user_id', '=', 'user.id')
             .select( 'device.id', 'device.name', 'device.price', 'device.img','device.info', 'user.login', 'device.user_id')
             return res.json({device})
-
     }
 
     async getUserDevices(req, res, next) {
-
             const {id} = req.body
             const devices = await db('device')
             .where({
@@ -73,11 +68,9 @@ class DeviceController {
             })
             .select('*')
             res.json(devices) 
-
     }
 
     async deleteOneDevice(req,res, next) {
-
             const {id} = req.body
             const deletedDevice = await db('device')
             .where({
@@ -85,7 +78,6 @@ class DeviceController {
             })
             .delete()
             res.json(deletedDevice) 
-
     }
 }
 

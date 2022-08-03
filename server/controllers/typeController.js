@@ -5,7 +5,6 @@ const db = knex(configs.development.database)
 
 
 class TypeController {
-
     async create(req, res, next) {
         try {
             const {name} = req.body
@@ -18,21 +17,16 @@ class TypeController {
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
-
-
     }
 
     async getAll(req, res) {
-
             const types = await db
             .select(['id', 'name'])
             .from('type')
             return res.json(types)
-
     }
 
     async delete(req ,res, next) {
-
             const {id} = req.body
             const device = await db('device')
             .where({
@@ -45,7 +39,6 @@ class TypeController {
             })
             .delete()
             res.json(type)
-
     }
 }
 

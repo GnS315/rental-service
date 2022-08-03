@@ -6,7 +6,6 @@ const db = knex(configs.development.database)
 
 class MessageController {
     async createRoom(req, res, next) {
-
             const {firstId, secondId} = req.body
             let roomNumber;
             let first_id;
@@ -41,12 +40,9 @@ class MessageController {
             } else (
                 next(ApiError.badRequest('Неверно задано имя'))
             )
-
-
     }
 
     async getAllRooms(req, res, next) {
-
         const {id} = req.query
             const chatRoomsFirst = await db('rooms')
             .where({
@@ -66,11 +62,9 @@ class MessageController {
             .select('rooms.id', 'rooms.room', 'rooms.first_user_id', 'rooms.second_user_id', 'user.login', 'user.id')
             const rooms = [...chatRoomsFirst, ...chatRoomsSecond]
         return res.json(rooms)
-
     }
     
     async createMessage (req,res, next) {
-
             const {userId, roomId, message} = req.body
             const sentMessage = await db('messages')
             .insert({
@@ -81,11 +75,9 @@ class MessageController {
             })
             .returning('*')
             res.json(sentMessage)
-
     }
 
     async getUserMessages(req , res, next) {
-
             const {roomId} = req.body
             const messages = await db('messages')
             .where({
@@ -97,9 +89,7 @@ class MessageController {
             .select('messages.id', 'messages.room_id', 'messages.user_sender_id', 'messages.message', 'messages.date', 'user.login')
             .orderBy('messages.date')
             res.json(messages)
-
     }
-
 }
 
 module.exports = new MessageController()
