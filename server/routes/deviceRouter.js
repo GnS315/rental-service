@@ -10,8 +10,8 @@ const authMiddleware = require('../middleware/authMiddleware');
 router.post('/', deviceController.create)
 router.get('/', deviceController.getAll)
 router.get('/:id', deviceController.getOne)
-router.post('/user',  deviceController.getUserDevices)
-router.post('/delete', deviceController.deleteOneDevice)
+router.post('/user', authMiddleware,  deviceController.getUserDevices)
+router.post('/delete', authMiddleware, deviceController.deleteOneDevice)
 
 
 module.exports = router;

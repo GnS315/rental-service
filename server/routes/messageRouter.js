@@ -7,8 +7,8 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 router.get('/', messageController.getAllRooms)
 router.post('/', messageController.createRoom)
-router.post('/create', messageController.createMessage)
-router.post('/get',  messageController.getUserMessages)
+router.post('/create', authMiddleware, messageController.createMessage)
+router.post('/get',authMiddleware,  messageController.getUserMessages)
 
 
 module.exports = router;

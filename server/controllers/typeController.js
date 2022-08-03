@@ -7,7 +7,7 @@ const db = knex(configs.development.database)
 class TypeController {
 
     async create(req, res, next) {
-
+        try {
             const {name} = req.body
             const type = await db('type')
             .insert({
@@ -15,6 +15,10 @@ class TypeController {
             })
             .returning(db.raw('*'))
             return res.json(type)
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
+
 
     }
 

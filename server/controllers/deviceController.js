@@ -8,6 +8,7 @@ const path = require('path');
 class DeviceController {
 
     async create(req, res, next) {
+        try {
             const {name, price, typeId, userId, info} = req.body
             const {img} = req.files
             let fileName = uuid.v4() + '.jpg'
@@ -23,6 +24,9 @@ class DeviceController {
             })
             .returning('*')
             return res.json(device)
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
     }
 
     async getAll(req, res) {
