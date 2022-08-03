@@ -14,15 +14,15 @@ class DeviceController {
             let fileName = uuid.v4() + '.jpg'
             img.mv(path.resolve(__dirname, '..', 'static', fileName))
             const device = await db('device')
-            .insert({
-                'name':name,
-                'price':price,
-                'type_id':typeId,
-                'user_id':userId,
-                'img':fileName,
-                'info': info
-            })
-            .returning('*')
+                .insert({
+                    'name':name,
+                    'price':price,
+                    'type_id':typeId,
+                    'user_id':userId,
+                    'img':fileName,
+                    'info': info
+                })
+                .returning('*')
             return res.json(device)
         } catch (e) {
             next(ApiError.badRequest(e.message))
@@ -30,6 +30,7 @@ class DeviceController {
     }
 
     async getAll(req, res) {
+        try {
             let {typeId, limit, page} = req.query;
             page = page || 1
             limit = limit || 9
@@ -37,47 +38,64 @@ class DeviceController {
             let devices;
             if (!typeId) {
                 devices = await db('device')
-                .join('user', 'device.user_id', '=', 'user.id')
-                .select( 'device.id', 'device.name', 'device.price', 'device.img','device.info', 'user.login')
+                    .join('user', 'device.user_id', '=', 'user.id')
+                    .select( 'device.id', 'device.name', 'device.price', 'device.img','device.info', 'user.login')
             }
             if(typeId) {
                 devices = await db('device')
-                .where({
-                    'type_id':typeId
-                })
-                .join('user', {'device.user_id' : 'user.id'})
-                .select( 'device.id', 'device.name', 'device.price', 'device.img','device.info', 'user.login')
+                    .where({
+                        'type_id':typeId
+                    })
+                    .join('user', {'device.user_id' : 'user.id'})
+                    .select( 'device.id', 'device.name', 'device.price', 'device.img','device.info', 'user.login')
             }
             return res.json(devices)
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
+
     }
 
     async getOne(req, res) {
+        try {
             const {id} = req.params
             const device = await db('device')
-            .where({'device.id': id})
-            .join('user', 'device.user_id', '=', 'user.id')
-            .select( 'device.id', 'device.name', 'device.price', 'device.img','device.info', 'user.login', 'device.user_id')
+                .where({'device.id': id})
+                .join('user', 'device.user_id', '=', 'user.id')
+                .select( 'device.id', 'device.name', 'device.price', 'device.img','device.info', 'user.login', 'device.user_id')
             return res.json({device})
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
     }
 
     async getUserDevices(req, res, next) {
+        try {
             const {id} = req.body
             const devices = await db('device')
-            .where({
-                'user_id' : id
-            })
-            .select('*')
+                .where({
+                    'user_id' : id
+                })
+                .select('*')
             res.json(devices) 
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
+
     }
 
     async deleteOneDevice(req,res, next) {
+        try {
             const {id} = req.body
             const deletedDevice = await db('device')
-            .where({
-                'id' : id
-            })
+                .where({
+                    'id' : id
+                })
             .delete()
             res.json(deletedDevice) 
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
     }
 }
 

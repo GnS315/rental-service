@@ -15,44 +15,45 @@ const generateJWT = (id, login, role) => {
 
 class UserController {
     async registration(req, res, next) {
-
+        try {
             const {login, password, role} = req.body
             if(!login || !password) {
                 return next(ApiError.badRequest('Некорректный email или password'))
             }
             const candidate = await db('user')
-            .where({
-                'login':login
-            })
-            .select('login')
+                .where({
+                    'login':login
+                })
+                .select('login')
             if (candidate[0]?.login === login) {
                 next(ApiError.badRequest('Пользователь уже существует'))
             }
             const hashPassword = await bcrypt.hash(password, 5)
             const user = await db('user')
-            .insert({
-                'login':login,
-                'password':hashPassword,
-                'role':role
-            })
+                .insert({
+                    'login':login,
+                    'password':hashPassword,
+                    'role':role
+                })
             const userId = await db('user')
-            .where({
-                'login':login
-            })
+                .where({
+                    'login':login
+                })
             .select('*')
             const tokenValue = generateJWT(userId[0].id, userId[0].login, userId[0].role)
             return res.json({token: tokenValue})
-
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
     }
 
     async login(req, res, next) {
-
+        try {
             const {login, password} = req.body
             const user = await db('user')
-            .where({
-                'login':login
-            })
-            //.select('*')
+                .where({
+                    'login':login
+                })
             if(user[0]?.login !== login){
                 return next(ApiError.internal('Пользователь с таким именем не найден'))
             }
@@ -65,44 +66,53 @@ class UserController {
             }
             const token = generateJWT(user[0].id, user[0].login, user[0].role)
             return res.json({'token': token})
-
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
     }
 
     async check(req, res, next) {
-
+        try {
             const token = generateJWT(req.user.id, req.user.login, req.user.role)
             return res.json({token})
-
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
     }
 
     async getAllUsers (req, res, next) {
-
+        try {
             const allUsers = await db('user') 
-            .whereNot({
-                'role': "ADMIN",
-                'status':'blocked'
-            })
-            .select("*")
+                .whereNot({
+                    'role': "ADMIN",
+                    'status':'blocked'
+                })
+                .select("*")
             res.json(allUsers)
-
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
     }
 
     async banUser (req, res, next) {
-
+        try {
             const {id} = req.body
             const deletedDevice = await db('device')
-            .where({
-                'user_id':id
-            })
-            .delete()
+                .where({
+                    'user_id':id
+                })
+                .delete()
             const deletedUser = await db('user')
-            .where({
-                'id':id
-            })
-            .update({
+                .where({
+                    'id':id
+                })
+                .update({
                 'status': 'blocked'
             })
             res.json(deletedUser)
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
     }
 }
 

@@ -18,17 +18,17 @@ exports.seed = async function(knex) {
 
 
   await knex('user').insert([
-    {id: 1, login: 'ADMIN', password: hashPassword, role:'ADMIN', status: 'active'},
-    {id: 2, login: 'ADMIN1', password: hashPassword, role:'ADMIN', status: 'active'},
-    {id: 3, login: 'ADMIN2', password: hashPassword, role:'ADMIN', status: 'active'},
-    {id: 4, login: 'UserName', password: userPassword, role:'USER', status: 'active'},
-    {id: 5, login: 'UserName1', password: userPassword, role:'USER', status: 'active'},
-    {id: 6, login: 'UserName2', password: userPassword, role:'USER', status: 'active'},
+    {login: 'ADMIN', password: hashPassword, role:'ADMIN', status: 'active'},
+    {login: 'ADMIN1', password: hashPassword, role:'ADMIN', status: 'active'},
+    {login: 'ADMIN2', password: hashPassword, role:'ADMIN', status: 'active'},
+    {login: 'UserName', password: userPassword, role:'USER', status: 'active'},
+    {login: 'UserName1', password: userPassword, role:'USER', status: 'active'},
+    {login: 'UserName2', password: userPassword, role:'USER', status: 'active'},
   ]);
   await knex('type').insert([
-    {id: 1, name: 'Техника'},
-    {id: 2, name: 'Хобби'},
-    {id: 3, name: 'Инструменты'},
-    {id: 4, name: 'Спорт'}
+    {name: 'Техника'},
+    {name: 'Хобби'},
+    {name: 'Инструменты'},
+    {name: 'Спорт'}
   ])
 };

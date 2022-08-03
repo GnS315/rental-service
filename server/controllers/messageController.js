@@ -6,6 +6,7 @@ const db = knex(configs.development.database)
 
 class MessageController {
     async createRoom(req, res, next) {
+        try {
             const {firstId, secondId} = req.body
             let roomNumber;
             let first_id;
@@ -22,10 +23,10 @@ class MessageController {
                 second_id = secondId
                 )
                 const checkRoom = await db('rooms')
-                .where({
-                    'room':roomNumber
-                })
-                .select("*")
+                    .where({
+                        'room':roomNumber
+                    })
+                    .select("*")
                 if (checkRoom[0]?.room == roomNumber) {
                     return res.json(checkRoom)
                 }
@@ -40,55 +41,72 @@ class MessageController {
             } else (
                 next(ApiError.badRequest('Неверно задано имя'))
             )
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
+
     }
 
     async getAllRooms(req, res, next) {
-        const {id} = req.query
+        try {
+            const {id} = req.query
             const chatRoomsFirst = await db('rooms')
-            .where({
-            'first_user_id': id
-            })
-            .join('user', {
-                'user.id': 'rooms.second_user_id'
-            })
-            .select('rooms.id', 'rooms.room', 'rooms.first_user_id', 'rooms.second_user_id', 'user.login', 'user.id')
-            const chatRoomsSecond = await db('rooms')
-            .where({
-            'second_user_id': id
-            })
-            .join('user', {
-                'user.id': 'rooms.first_user_id'
-            })
-            .select('rooms.id', 'rooms.room', 'rooms.first_user_id', 'rooms.second_user_id', 'user.login', 'user.id')
+                .where({
+                'first_user_id': id
+                })
+                .join('user', {
+                    'user.id': 'rooms.second_user_id'
+                })
+                .select('rooms.id', 'rooms.room', 'rooms.first_user_id', 'rooms.second_user_id', 'user.login', 'user.id')
+                const chatRoomsSecond = await db('rooms')
+                .where({
+                'second_user_id': id
+                })
+                .join('user', {
+                    'user.id': 'rooms.first_user_id'
+                })
+                .select('rooms.id', 'rooms.room', 'rooms.first_user_id', 'rooms.second_user_id', 'user.login', 'user.id')
             const rooms = [...chatRoomsFirst, ...chatRoomsSecond]
-        return res.json(rooms)
+            return res.json(rooms)
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
+
     }
     
     async createMessage (req,res, next) {
+        try {
             const {userId, roomId, message} = req.body
             const sentMessage = await db('messages')
-            .insert({
-                'room_id': roomId,
-                'user_sender_id':userId,
-                'message' : message,
-                'date': new Date().now
-            })
-            .returning('*')
+                .insert({
+                    'room_id': roomId,
+                    'user_sender_id':userId,
+                    'message' : message,
+                    'date': new Date().now
+                })
+                .returning('*')
             res.json(sentMessage)
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
     }
 
     async getUserMessages(req , res, next) {
+        try {
             const {roomId} = req.body
             const messages = await db('messages')
-            .where({
-                'room_id':roomId
-            })
-            .join('user' , {
-                'user.id': 'messages.user_sender_id'
-            })
-            .select('messages.id', 'messages.room_id', 'messages.user_sender_id', 'messages.message', 'messages.date', 'user.login')
-            .orderBy('messages.date')
+                .where({
+                    'room_id':roomId
+                })
+                .join('user' , {
+                    'user.id': 'messages.user_sender_id'
+                })
+                .select('messages.id', 'messages.room_id', 'messages.user_sender_id', 'messages.message', 'messages.date', 'user.login')
+                .orderBy('messages.date')
             res.json(messages)
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
     }
 }
 
